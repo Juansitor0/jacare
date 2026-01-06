@@ -1,9 +1,18 @@
 import sys
+import uvicorn
 
 from core.loader import load_csv_from_zip
 from core.filters import filter_creditable, filter_board_name
 from core.transformer import transform_inventory
 from core.exporter import export_to_csv
+
+if __name__ == "__main__":
+    uvicorn.run(
+        "web.main:app",
+        host="127.0.0.1",
+        port=8000,
+        reload=False
+    )
 
 
 def main():
