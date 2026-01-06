@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-def exportar_csv(df: pd.DataFrame, output_path: str, separator=",") -> None:
+def export_csv(df: pd.DataFrame, output_path: str, separator=",") -> None:
     """
     Exporta um DataFrame do pandas para um arquivo CSV.
 
