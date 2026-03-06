@@ -21,10 +21,18 @@ def transform_inventory(df: pd.DataFrame) -> pd.DataFrame:
         board_type_raw = row["Board Type"]
         board_type = board_type_raw[4:] if board_type_raw and len(board_type_raw) > 4 else ""
 
+        # Limpa a coluna Manufacturer Data para pegar apenas o primeiro valor (antes da vírgula)
+        manufacturer_raw = str(row.get("Manufacturer Data", "")).strip()
+        manufacturer = manufacturer_raw.split(',')[0] if manufacturer_raw else ""
+
         inventory_id = str(row["Inventory Unit ID"]).zfill(2)
 
         if site not in resultado:
-            resultado[site] = {"site": site, **{f"Slot {s}": "" for s in SLOTS}}
+            resultado[site] = {
+                "site": site,
+                "Manufacturer": manufacturer,
+                **{f"Slot {s}": "" for s in SLOTS}
+            }
 
         if inventory_id in SLOTS:
             resultado[site][f"Slot {inventory_id}"] = board_type

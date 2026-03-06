@@ -89,6 +89,6 @@ def process_file(file: UploadFile = File(...)):
     # Return CSV to user
     return FileResponse(
         path=output_path,
-        filename=output_path.name,
+        filename="resultado.csv",
         media_type="text/csv"
     )
