@@ -33,9 +33,18 @@ def transform_inventory(df: pd.DataFrame) -> pd.DataFrame:
                 "Manufacturer": manufacturer,
                 **{f"Slot {s}": "" for s in SLOTS}
             }
+        
+        # Se o site já existe, tenta atualizar o Manufacturer se o atual for genérico ou vazio
+        elif manufacturer:
+            current_m = resultado[site]["Manufacturer"]
+            generic_terms = ["finished board unit", "function module", "unknown", ""]
+            if current_m.lower() in generic_terms:
+                resultado[site]["Manufacturer"] = manufacturer
 
         if inventory_id in SLOTS:
-            resultado[site][f"Slot {inventory_id}"] = board_type
+            # Se o slot já estiver preenchido, podemos concatenar ou manter o primeiro (depende da regra, mas vamos manter o primeiro por enquanto)
+            if not resultado[site][f"Slot {inventory_id}"]:
+                resultado[site][f"Slot {inventory_id}"] = board_type
 
     return pd.DataFrame(resultado.values())
 

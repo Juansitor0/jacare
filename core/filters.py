@@ -27,12 +27,12 @@ def filter_creditable(df: pd.DataFrame) -> pd.DataFrame:
     return filtered_df
 
 
-def filter_board_name(df: pd.DataFrame, board_name: str = "UBBP") -> pd.DataFrame:
+def filter_board_name(df: pd.DataFrame, board_names: list = ["UBBP", "AIRU"]) -> pd.DataFrame:
     """
     Filtra o DataFrame para incluir apenas linhas onde a coluna 'board_name' (case-insensitive)
-    corresponde ao valor fornecido.
+    corresponde a um dos valores fornecidos na lista.
     """
     col = _find_column(df, 'board_name')
 
-    filtered_df = df[df[col].astype(str) == str(board_name)]
+    filtered_df = df[df[col].astype(str).isin(board_names)]
     return filtered_df
