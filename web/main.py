@@ -3,7 +3,7 @@ import shutil
 import uuid
 from pathlib import Path
 
-from fastapi import FastAPI, UploadFile, File, Request
+from fastapi import FastAPI, UploadFile, File, Request, Form
 from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
@@ -68,7 +68,7 @@ def home(request: Request):
 
 
 @app.post("/process")
-def process_file(file: UploadFile = File(...)):
+def process_file(file: UploadFile = File(...), board_type: str = Form("UBBP")):
     uid = uuid.uuid4().hex
 
     zip_path = ENTRADA / f"{uid}.zip"
@@ -81,7 +81,13 @@ def process_file(file: UploadFile = File(...)):
     # Pipeline
     df = load_csv_from_zip(zip_path)
     df = filter_creditable(df)
-    df = filter_board_name(df)
+    
+    # Aplicar filtro baseado na escolha do usuário
+    if board_type == "BOTH":
+        df = filter_board_name(df, ["UBBP", "AIRU"])
+    else:
+        df = filter_board_name(df, [board_type])
+        
     final_df = transform_inventory(df)
 
     export_csv(final_df, output_path)

@@ -108,6 +108,41 @@
             color: var(--muted);
         }
 
+        .filter-options {
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .filter-label {
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 4px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 16px;
+            background: rgba(31, 41, 51, 0.5);
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .radio-option input {
+            accent-color: var(--green);
+            cursor: pointer;
+        }
+
         button {
             width: 100%;
             padding: 14px;
@@ -153,6 +188,24 @@
                 <input id="file" name="file" type="file" required>
                 <div class="file-hint">
                     Aceita apenas inventário compactado (.zip)
+                </div>
+            </div>
+
+            <div class="filter-options">
+                <div class="filter-label">Tipo de Equipamento:</div>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="board_type" value="UBBP" checked>
+                        UBBP
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="board_type" value="AIRU">
+                        RADIUS (AIRU)
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="board_type" value="BOTH">
+                        Ambos
+                    </label>
                 </div>
             </div>
 
